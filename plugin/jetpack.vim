@@ -788,7 +788,7 @@ function! jetpack#get(name) abort
   return get(s:declared_packages, a:name, {})
 endfunction
 
-if !has('nvim') && !(has('lua') && has('patch-8.2.0775'))
+if !has('nvim') "&& !(has('lua') && has('patch-8.2.0775'))
   finish
 endif
 
