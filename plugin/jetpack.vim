@@ -29,11 +29,11 @@ if has('nvim')
   function! jetpack#execute(code) abort
     return v:lua.vim.cmd(a:code)
   endfunction
-elseif has('lua')
-  function! jetpack#execute(code) abort
-    let g:jetpack_code = a:code
-    lua vim.command(vim.eval('g:jetpack_code'))
-  endfunction
+"elseif has('lua')
+"  function! jetpack#execute(code) abort
+"    let g:jetpack_code = a:code
+"    lua vim.command(vim.eval('g:jetpack_code'))
+"  endfunction
 elseif has('patch-8.2.4594')
   function! jetpack#execute(code) abort
     let c = bufnr()
@@ -753,10 +753,12 @@ function! jetpack#end() abort
         "echomsg '[[source' file ']]'
         execute 'source' file
       endfor
-      for file in glob(pkg.path . '/ftdetect/*.lua', '', 1)
-        "echomsg '[[luafile' file ']]'
-        execute 'luafile' file
-      endfor
+      if has('nvim')
+        for file in glob(pkg.path . '/ftdetect/*.lua', '', 1)
+          "echomsg '[[luafile' file ']]'
+          execute 'luafile' file
+        endfor
+      endif
     else
       let runtimepath = extend([pkg.path . '/' . pkg.rtp], runtimepath)
       let runtimepath = extend(runtimepath, [pkg.path . '/' . pkg.rtp . '/after'])
